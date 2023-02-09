@@ -42,15 +42,16 @@ document.getElementById('thisBtn').addEventListener('click', function (event) {
         console.log(data, "api");
         console.log(data.weather[0].description);
          city.textContent= data.name;
-         city_temp.textContent = data.main.temp + "°F";
+         city_temp.textContent = ` ${data.main.temp}  °F`;
+         //city_temp.textContent = data.main.temp + "°F";
         theDate.textContent = current_date;
 
-      the_wind.textContent = data.wind.speed + " MPH"
-        the_humidity.textContent = data.main.humidity
+      the_wind.textContent = `Wind: ${data.wind.speed} MPH` // using template literals 
+        the_humidity.textContent = `Humidity: ${data.main.humidity}`
         
         
 
-        //city_temp.text(data.main)
+       
         
         
 
