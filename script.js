@@ -9,6 +9,8 @@ const theDate = document.querySelector('.current-date');
 const the_wind = document.querySelector('.theWind');
 const the_humidity = document.querySelector('.theHud');
 
+const cardDates = document.querySelector('.card-header')
+
 
 let today = new Date();
     
@@ -43,15 +45,45 @@ document.getElementById('thisBtn').addEventListener('click', function (event) {
         console.log(data.weather[0].description);
          city.textContent= data.name;
          city_temp.textContent = ` ${data.main.temp}  °F`;
-         //city_temp.textContent = data.main.temp + "°F";
-        theDate.textContent = current_date;
+         const date = new Date(data.dt * 1000);
+         theDate.textContent = `${date.toLocaleDateString("en-US", {
+           month: "2-digit",
+           day: "2-digit",
+           year: "numeric"
+         })}`;
+       
+         
 
       the_wind.textContent = `Wind: ${data.wind.speed} MPH` // using template literals 
-        the_humidity.textContent = `Humidity: ${data.main.humidity}`
+        the_humidity.textContent = `Humidity: ${data.main.humidity} %`
         
-        
+        var lat = (data.coord.lat);
+        var lon = (data.coord.lon);
+        var fiveDay = "https://api.openweathermap.org/data/2.5/forecast?" + "lat=" + lat + "&lon=" + lon + "&appid=" + myApi + "&units=" + "imperial";
 
-       
+        return fetch(fiveDay).then(res => {
+            return res.json()
+        })
+        
+        .then(data => {
+            console.log(data);
+            let  = new Date(data.list[5].dt_txt);
+            for (let i = 0; i < data.list.length; i += 8) {
+                let date = new Date(data.list[i].dt_txt);
+                let options = { year: 'numeric', month: 'short', day: 'numeric' };
+                let formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+              
+                // Do something with the formatted date, such as adding it to the page
+                let forecastDate = document.createElement('p');
+                forecastDate.textContent = formattedDate;
+                document.body.appendChild(forecastDate);
+              }
+              
+            
+        })
+        
+         
+        
         
         
 
