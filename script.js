@@ -72,12 +72,13 @@ document.getElementById('thisBtn').addEventListener('click', function (event) {
                 let date = new Date(data.list[i].dt_txt);
                 let options = { year: 'numeric', month: 'short', day: 'numeric' };
                 let formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
-              
+            
                 // Do something with the formatted date, such as adding it to the page
                 let forecastDate = document.createElement('p');
                 forecastDate.textContent = formattedDate;
-                document.body.appendChild(forecastDate);
-              }
+                cardDates.appendChild(forecastDate);
+            }
+            
               
             
         })
