@@ -9,7 +9,14 @@ const theDate = document.querySelector('.current-date');
 const the_wind = document.querySelector('.theWind');
 const the_humidity = document.querySelector('.theHud');
 
-const cardDates = document.querySelector('.card-header')
+const icon = $("#emoji");
+
+
+const cardDate1 = document.getElementById('card1')
+const cardDate2 = document.getElementById('card2')
+const cardDate3 = document.getElementById('card3')
+const cardDate4 = document.getElementById('card4')
+const cardDate5 = document.getElementById('card5')
 
 
 let today = new Date();
@@ -67,19 +74,41 @@ document.getElementById('thisBtn').addEventListener('click', function (event) {
         
         .then(data => {
             console.log(data);
-            let  = new Date(data.list[5].dt_txt);
-            for (let i = 0; i < data.list.length; i += 8) {
-                let date = new Date(data.list[i].dt_txt);
-                let options = { year: 'numeric', month: 'short', day: 'numeric' };
-                let formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
-            
-                
-                let forecastDate = document.createElement('p');
-                forecastDate.textContent = formattedDate;
-                cardDates.appendChild(forecastDate);
-            }
-            
-              
+            let date1 = new Date(data.list[4].dt_txt);
+            let temp_1 = document.getElementById('temp1')
+            let wind_1 = document.getElementById('wind1')
+            cardDate1.textContent = date1.toLocaleDateString();
+            temp_1.textContent = `Temp: ${data.list[4].main.temp} °F `
+            wind_1.textContent = `Wind: ${data.list[4].wind.speed} MPH `
+
+            let date2 = new Date(data.list[8].dt_txt);
+            let temp_2 = document.getElementById('temp2')
+            let wind_2 =document.getElementById('wind2')
+            cardDate2.textContent = date2.toLocaleDateString();
+            temp_2.textContent = `Temp: ${data.list[8].main.temp} °F `
+            wind_2.textContent = `Wind: ${data.list[8].wind.speed} MPH `
+
+            let date3 = new Date(data.list[16].dt_txt);
+            let temp_3 = document.getElementById('temp3')
+            let wind_3 = document.getElementById('wind3')
+            cardDate3.textContent = date3.toLocaleDateString();
+            temp_3.textContent = `Temp: ${data.list[16].main.temp} °F `
+            wind_3.textContent = `Wind: ${data.list[16].wind.speed} MPH `
+
+            let date4 = new Date(data.list[24].dt_txt);
+            let temp_4 = document.getElementById('temp4')
+            let wind_4 = document.getElementById('wind4')
+            cardDate4.textContent = date4.toLocaleDateString();
+            temp_4.textContent = `Temp: ${data.list[24].main.temp} °F `
+            wind_4.textContent = `Wind: ${data.list[24].wind.speed} MPH `
+
+            let date5 = new Date(data.list[32].dt_txt);
+            let temp_5 = document.getElementById('temp5')
+            let wind_5 = document.getElementById('wind5')
+            cardDate5.textContent = date5.toLocaleDateString();
+            temp_5.textContent = `Temp: ${data.list[32].main.temp} °F `
+            wind_5.textContent = `Wind: ${data.list[32].wind.speed} MPH `
+
             
         })
         
@@ -96,3 +125,6 @@ document.getElementById('thisBtn').addEventListener('click', function (event) {
     
 
 
+// need to hide 5 day and show when the button is clicked 
+// need to figure out how to add weather icon images to the cards
+// need to figure how set local storage for the data / implent with the event listener
