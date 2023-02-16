@@ -9,7 +9,8 @@ const theDate = document.querySelector('.current-date');
 const the_wind = document.querySelector('.theWind');
 const the_humidity = document.querySelector('.theHud');
 
-const icon = $("#emoji");
+var day_icon = document.getElementById('#mainEmoji')
+
 
 
 const cardDate1 = document.getElementById('card1')
@@ -17,6 +18,11 @@ const cardDate2 = document.getElementById('card2')
 const cardDate3 = document.getElementById('card3')
 const cardDate4 = document.getElementById('card4')
 const cardDate5 = document.getElementById('card5')
+
+
+
+
+
 
 
 let today = new Date();
@@ -53,6 +59,10 @@ document.getElementById('thisBtn').addEventListener('click', function (event) {
          city.textContent= data.name;
          city_temp.textContent = ` ${data.main.temp}  °F`;
          const date = new Date(data.dt * 1000);
+         var icon = data.weather[0].icon;
+         console.log(icon)
+         $("#mainEmoji").attr('src', `https://openweathermap.org/img/wn/${icon}@2x.png`);
+
          theDate.textContent = `${date.toLocaleDateString("en-US", {
            month: "2-digit",
            day: "2-digit",
@@ -63,6 +73,7 @@ document.getElementById('thisBtn').addEventListener('click', function (event) {
 
       the_wind.textContent = `Wind: ${data.wind.speed} MPH` // using template literals 
         the_humidity.textContent = `Humidity: ${data.main.humidity} %`
+
         
         var lat = (data.coord.lat);
         var lon = (data.coord.lon);
@@ -77,9 +88,13 @@ document.getElementById('thisBtn').addEventListener('click', function (event) {
             let date1 = new Date(data.list[4].dt_txt);
             let temp_1 = document.getElementById('temp1')
             let wind_1 = document.getElementById('wind1')
+            // let emoji_1 = document.getElementById('emoji1')
+            // emoji_1 = "http://openweathermap.org/img/wn/" + data.list[4].icon + ".png"
             cardDate1.textContent = date1.toLocaleDateString();
             temp_1.textContent = `Temp: ${data.list[4].main.temp} °F `
             wind_1.textContent = `Wind: ${data.list[4].wind.speed} MPH `
+            $('emoji1').attr('src', `http://openweathermap.org/img/wn/  ${data.list[4].icon} ".png"`    )
+            
 
             let date2 = new Date(data.list[8].dt_txt);
             let temp_2 = document.getElementById('temp2')
