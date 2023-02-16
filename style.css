@@ -68,7 +68,7 @@ input{
     padding-top: 10px;
     display: flex;
     justify-content: space-around;
-    opacity: 1;
+    opacity: 0;
   }
   
   
