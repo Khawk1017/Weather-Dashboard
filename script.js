@@ -50,9 +50,16 @@ document.getElementById('thisBtn').addEventListener('click', function (event) {
     console.log("City", city_name)
     cards.style.opacity = "1";
     localStorage.setItem('city_input', JSON.stringify(city_name))
+    if(localStorage.getItem("city_input") === null) {
+        localStorage.setItem("city_input", JSON.stringify([]));
+        }
+        var storedCities = JSON.parse(localStorage.getItem("city_input"));
+        if(!storedCities.includes(city_name)) {
+        storedCities.push(city_name);
+        }
 
-    const cityList = document.getElementById('cityList')
-    const storedCities = JSON.parse(localStorage.getItem('cities')) || [];
+    const cityList = document.querySelector('#cityList')
+    
 
     // render the stored cities
     if(storedCities.length > 0){
@@ -74,7 +81,7 @@ document.getElementById('thisBtn').addEventListener('click', function (event) {
     }
     // add city button to the list
     function addCityButton(CityName){
-        const cityItem = document.createElement('li');
+        const cityItem = document.createElement('button');
         cityItem.textContent = CityName;
         cityList.appendChild(cityItem);
     }
