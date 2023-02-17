@@ -57,52 +57,7 @@ document.getElementById('thisBtn').addEventListener('click', function (event) {
         if(!storedCities.includes(city_name)) {
         storedCities.push(city_name);
         }
-
-    const cityList = document.querySelector('#cityList')
-    
-
-    // render the stored cities
-    if(storedCities.length > 0){
-        for (let i = 0; i < storedCities.length; i++){
-            addCityButton(storedCities[i]);
-        }
-    }
-
-    // add city to the list and store to the local storage
-    function addCity(){
-        const CityName = city_name.value.trim();
-        if(CityName){
-            // create and add city button tot the list
-            addCityButton(CityName)
-            // add the city to the storedCities array and update local storage
-            storedCities.push(CityName);
-            localStorage.setItem('cities', JSON.stringify(storedCities));
-        }
-    }
-    // add city button to the list
-    function addCityButton(CityName){
-        const cityItem = document.createElement('button');
-        cityItem.textContent = CityName;
-        cityList.appendChild(cityItem);
-    }
-
-    const cityBtn = document.getElementById('thisBtn')
-    
-    cityBtn.addEventListener('click', function(event){
-        event.preventDefault();
-        const city_name = cityInput.value;
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city_name}&appid=${myApi}&units=imperial`)
-        .then(response => response.json())
-        .then(data => {
-          // Update UI with weather data
-          // ...
-          // Add city to the list and store in local storage
-          addCity();
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-    })
+ 
 
 
 
@@ -212,4 +167,5 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city_name}&appid=036d
 
 
 })
-// need to implement the local storage 
+// local storage is implemented need to fix the values so that the previous one is not replaced 
+// also need to add  recent history function that creates and appends buttons beneath the input and generates the api data
