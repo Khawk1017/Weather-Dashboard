@@ -194,3 +194,8 @@ const displayRecent = () => {
 
 displayRecent();
 
+async function fetchWeather(city) {
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=036d5581dff1701982052a13de844a4f`);
+    const data = await response.json();
+    return data;
+}
