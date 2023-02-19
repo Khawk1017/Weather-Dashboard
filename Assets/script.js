@@ -56,16 +56,16 @@ document.getElementById('thisBtn').addEventListener('click', function (event) {
     var storedCities = JSON.parse(localStorage.getItem("city_input")) || [];
     if (!storedCities.includes(city_name)) {
         storedCities.push(city_name);
-        localStorage.setItem('city_input', JSON.stringify(storedCities))
+        localStorage.setItem('city_input', JSON.stringify(storedCities))  
 
-        fetchWeather();
+      
     }
 
  
 
     // city data fetch logs data and displays the information to the content area
 function fetchWeather(city_name){
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city_name}&appid=036d5581dff1701982052a13de844a4f` + "&units=" + "imperial")
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city_name}&appid=036d5581dff1701982052a13de844a4f` )
         .then(response => response.json())
         .then(data => {
             console.log(data, "api");
@@ -164,7 +164,7 @@ function fetchWeather(city_name){
 
 
 
-
+    fetchWeather(city_name);
 
 })
 const displayRecent = () => {
@@ -187,15 +187,17 @@ const displayRecent = () => {
         city_name = event.target.textContent
         console.log(city_name);
         // document.getElementById("thisBtn").addEventListener('click',)
-        fetchWeather(event.target.textContent);
+        refetchWeather(event.target.textContent);
         
     }
  })
 
 displayRecent();
 
-async function fetchWeather(city) {
+async function refetchWeather(city) {
     const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=036d5581dff1701982052a13de844a4f`);
     const data = await response.json();
+    console.log(data);
     return data;
-}
+  }
+  
