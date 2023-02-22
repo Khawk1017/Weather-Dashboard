@@ -8,6 +8,8 @@ const cards = document.getElementById('forecastContainer');
 const theDate = document.querySelector('.current-date');
 const the_wind = document.querySelector('.theWind');
 const the_humidity = document.querySelector('.theHud');
+const thisBtn = document.getElementById('thisBtn')
+
 var city_name = ""
 var day_icon = document.getElementById('#mainEmoji')
 
@@ -37,38 +39,12 @@ let current_date = `${month}/${date}/${year}`;
 var myApi = "036d5581dff1701982052a13de844a4f"
 // var urlQuery = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + myApi + "&units=" + "imperial"
 
-
-fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city_name}&appid=036d5581dff1701982052a13de844a4f`)
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-
-    });
-document.getElementById('thisBtn').addEventListener('click', function (event) {
-    event.preventDefault()
-     city_name = document.getElementById('city_input').value
-    console.log("City", city_name)
-    cards.style.opacity = "1";
-    // localStorage.setItem('city_input', JSON.stringify(city_name))
-    // if (localStorage.getItem("city_input") === null) {
-    //     localStorage.setItem("city_input", JSON.stringify([]));
-    // }
-    var storedCities = JSON.parse(localStorage.getItem("city_input")) || [];
-    if (!storedCities.includes(city_name)) {
-        storedCities.push(city_name);
-        localStorage.setItem('city_input', JSON.stringify(storedCities))  
-
-        
-      
-    }
-
- 
-
-    // city data fetch logs data and displays the information to the content area
-function fetchWeather(city_name){
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city_name}&appid=036d5581dff1701982052a13de844a4f` )
+function fetchCityData(city_name) {
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city_name}&appid=036d5581dff1701982052a13de844a4f`)
         .then(response => response.json())
         .then(data => {
+            console.log(data);
+
             console.log(data, "api");
             console.log(data.weather[0].description);
             city.textContent = data.name;
@@ -152,59 +128,73 @@ function fetchWeather(city_name){
                     temp_5.textContent = `Temp: ${data.list[32].main.temp} °F `
                     wind_5.textContent = `Wind: ${data.list[32].wind.speed} MPH `
 
-                        
+
                 })
-
-
-                
-
-
-
         });
+}
+function searchCity(event){
+    event.preventDefault()
+    city_name = document.getElementById('city_input').value
+    console.log("City", city_name)
+    cards.style.opacity = "1";
+    // localStorage.setItem('city_input', JSON.stringify(city_name))
+    // if (localStorage.getItem("city_input") === null) {
+    //     localStorage.setItem("city_input", JSON.stringify([]));
+    // }
+    var storedCities = JSON.parse(localStorage.getItem("city_input")) || [];
+    if (!storedCities.includes(city_name)) {
+        storedCities.push(city_name);
+        localStorage.setItem('city_input', JSON.stringify(storedCities))
+
+
+
     }
 
 
 
-    fetchWeather(city_name);
+    // city data fetch logs data and displays the information to the content area
+    
 
-})
+
+
+    fetchCityData(city_name);
+}
+
 const displayRecent = () => {
     const recentCities = JSON.parse(localStorage.getItem("city_input"));
     const cityContainer = document.getElementById('cityList');
     cityContainer.innerHTML = ""
     for (const city of recentCities) {
         const newTag = document.createElement("a");
-        newTag.classList.add("list-group-item", "list-group-item-action", "recentName" )
+        newTag.classList.add("list-group-item", "list-group-item-action", "recentName")
         newTag.textContent = city
         console.log(newTag)
-        newTag.addEventListener('click', async(e) => {
+        newTag.addEventListener('click', async (e) => {
             const cityName = e.target.textContent;
             await displayWeather(cityName);
         })
         cityContainer.append(newTag);
-        
+
     }
     // <a href="#" class="list-group-item list-group-item-action">A second link item</a>
- }
- document.body.addEventListener('click', function (event){
+}
+document.body.addEventListener('click', function (event) {
     event.preventDefault();
-    if (event.target.classList.contains('recentName')){
+    if (event.target.classList.contains('recentName')) {
         city_name = event.target.textContent
         console.log(city_name);
         // document.getElementById("thisBtn").addEventListener('click',)
-        refetchWeather(event.target.textContent);
-        
+        fetchCityData(city_name);
+
     }
- })
+})
 
 displayRecent();
 
-async function refetchWeather(city) {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=036d5581dff1701982052a13de844a4f`);
-    const data = await response.json();
-    console.log(data);
-    return data;
-  }
-  
 
-  
+
+
+thisBtn.addEventListener('click', searchCity)
+
+
+// 
