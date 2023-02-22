@@ -35,10 +35,10 @@ let current_date = `${month}/${date}/${year}`;
 
 
 var myApi = "036d5581dff1701982052a13de844a4f"
-var urlQuery = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + myApi + "&units=" + "imperial"
+// var urlQuery = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + myApi + "&units=" + "imperial"
 
 
-fetch("https://api.openweathermap.org/data/2.5/weather?q=London&appid=036d5581dff1701982052a13de844a4f")
+fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city_name}&appid=036d5581dff1701982052a13de844a4f`)
     .then(response => response.json())
     .then(data => {
         console.log(data);
@@ -58,6 +58,7 @@ document.getElementById('thisBtn').addEventListener('click', function (event) {
         storedCities.push(city_name);
         localStorage.setItem('city_input', JSON.stringify(storedCities))  
 
+        
       
     }
 
@@ -151,11 +152,11 @@ function fetchWeather(city_name){
                     temp_5.textContent = `Temp: ${data.list[32].main.temp} °F `
                     wind_5.textContent = `Wind: ${data.list[32].wind.speed} MPH `
 
-
+                        
                 })
 
 
-
+                
 
 
 
@@ -176,6 +177,10 @@ const displayRecent = () => {
         newTag.classList.add("list-group-item", "list-group-item-action", "recentName" )
         newTag.textContent = city
         console.log(newTag)
+        newTag.addEventListener('click', async(e) => {
+            const cityName = e.target.textContent;
+            await displayWeather(cityName);
+        })
         cityContainer.append(newTag);
         
     }
@@ -200,4 +205,6 @@ async function refetchWeather(city) {
     console.log(data);
     return data;
   }
+  
+
   
