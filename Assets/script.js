@@ -8,6 +8,8 @@ const cards = document.getElementById('forecastContainer');
 const theDate = document.querySelector('.current-date');
 const the_wind = document.querySelector('.theWind');
 const the_humidity = document.querySelector('.theHud');
+const thisBtn = document.getElementById('thisBtn')
+
 var city_name = ""
 var day_icon = document.getElementById('#mainEmoji')
 
@@ -44,7 +46,7 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city_name}&appid=036d
         console.log(data);
 
     });
-document.getElementById('thisBtn').addEventListener('click', function (event) {
+thisBtn.addEventListener('click', function (event) {
     event.preventDefault()
      city_name = document.getElementById('city_input').value
     console.log("City", city_name)
