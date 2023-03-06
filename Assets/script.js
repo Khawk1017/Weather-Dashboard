@@ -161,7 +161,7 @@ function searchCity(event){
 }
 
 const displayRecent = () => {
-    const recentCities = JSON.parse(localStorage.getItem("city_input"));
+    const recentCities = JSON.parse(localStorage.getItem("city_input"))||[] ;
     const cityContainer = document.getElementById('cityList');
     cityContainer.innerHTML = ""
     for (const city of recentCities) {
@@ -169,9 +169,9 @@ const displayRecent = () => {
         newTag.classList.add("list-group-item", "list-group-item-action", "recentName")
         newTag.textContent = city
         console.log(newTag)
-        newTag.addEventListener('click', async (e) => {
+        newTag.addEventListener('submit',  (e) => {
             const cityName = e.target.textContent;
-            await displayWeather(cityName);
+             displayWeather(cityName);
         })
         cityContainer.append(newTag);
 
